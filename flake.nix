@@ -28,37 +28,45 @@
             ${pkgs.tree}/bin/tree -ifFC .
           '';
           InstallPhase = ''
-              
+
 
           '';
           nativeBuildInputs = [pkgs.unzip];
         };
       in {
         devShell = let
-          my-pkgs = ps: [
-            ps.torchvision
-            ps.pytorch
-            ps.numpy
-            ps.pillow
-            ps.tqdm
-            ps.wand
-            ps.fonttools
-            ps.scipy
-            ps.waitress
-            ps.bottle
-            ps.diskcache
-            ps.flake8
-            ps.psutil
-            ps.pyyaml
-            ps.onnx
-            ps.packaging
-            ps.wxPython_4_2
-            ps.av
-          ];
+          py-env = pkgs.python311.buildEnv {
+            extraLibs = let
+              ps = pkgs.python311Packages;
+            in [
+              ps.torchvision
+              ps.pytorch
+              ps.numpy
+              ps.pillow
+              ps.tqdm
+              ps.wand
+              ps.fonttools
+              ps.scipy
+              ps.waitress
+              ps.bottle
+              ps.diskcache
+              ps.flake8
+              ps.psutil
+              ps.pyyaml
+              ps.onnx
+              ps.packaging
+              ps.wxPython_4_2
+              ps.av
+            ];
+          };
         in
-          (pkgs.python311.withPackages my-pkgs).env;
+          pkgs.mkShell {
+            packages = [py-env];
 
-        WAIFU_DIRECTORY="${waifu2x}";
+            shellHook = ''
+              export WAIFU_DIRECTORY='${waifu2x}';
+            '';
+          };
       }
     );
 }
