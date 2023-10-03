@@ -25,8 +25,8 @@
           name = "waifu2x";
           src = waifu2x-src; # onnx-model pytorch-model];
           postBuild = ''
-            ln -s '${pytorch-model}/pretrained_models' waifu2x/pretrained_models;
-            ln -s '${onnx-model}/onnx-model' waifu2x/onnx_models;
+            ln -s '${pytorch-model}' waifu2x/pretrained_models;
+            ln -s '${onnx-model}' waifu2x/onnx_models;
             ${pkgs.tree}/bin/tree -ifFC .
           '';
           nativeBuildInputs = [pkgs.unzip];
