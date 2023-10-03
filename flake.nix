@@ -23,14 +23,14 @@
         pkgs = nixpkgs.legacyPackages.${system};
         waifu2x = pkgs.stdenv.mkDerivation {
           name = "waifu2x";
-          srcs = [waifu2x-src onnx-model pytorch-model];
-          setSourceRoot = ''
-            export sourceRoot="."
-            ${pkgs.tree}/bin/tree -ifFC .
+          src = waifu2x-src; # onnx-model pytorch-model];
+          postBuild = ''
+            ln -s '${pytorch-model}/pretrained_models' waifu2x/pretrained_models;
+            ln -s '${onnx-model}/onnx-model' waifu2x/onnx_models;
           '';
-          InstallPhase = ''
-
-
+          installPhase = ''
+            mkdir "$out"
+            mv "$src" "$out"
           '';
           nativeBuildInputs = [pkgs.unzip];
         };
