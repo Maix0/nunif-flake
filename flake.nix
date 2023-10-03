@@ -22,6 +22,7 @@
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
         waifu2x = pkgs.stdenv.mkDerivation {
+          name = "waifu2x";
           srcs = [waifu2x-src onnx-model pytorch-model];
           setSourceRoot = ''
             export sourceRoot="."
