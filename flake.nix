@@ -35,30 +35,32 @@
         };
       in {
         devShell = let
-          py-env = pkgs.python311.buildEnv {
-            extraLibs = let
-              ps = pkgs.python311Packages;
-            in [
-              ps.torchvision
-              ps.pytorch
-              ps.numpy
-              ps.pillow
-              ps.tqdm
-              ps.wand
-              ps.fonttools
-              ps.scipy
-              ps.waitress
-              ps.bottle
-              ps.diskcache
-              ps.flake8
-              ps.psutil
-              ps.pyyaml
-              ps.onnx
-              ps.packaging
-              ps.wxPython_4_2
-              ps.av
-            ];
-          };
+          py-env =
+            (pkgs.python311.buildEnv.override {
+              extraLibs = let
+                ps = pkgs.python311Packages;
+              in [
+                ps.torchvision
+                ps.pytorch
+                ps.numpy
+                ps.pillow
+                ps.tqdm
+                ps.wand
+                ps.fonttools
+                ps.scipy
+                ps.waitress
+                ps.bottle
+                ps.diskcache
+                ps.flake8
+                ps.psutil
+                ps.pyyaml
+                ps.onnx
+                ps.packaging
+                ps.wxPython_4_2
+                ps.av
+              ];
+            })
+            .env;
         in
           pkgs.mkShell {
             packages = [py-env];
