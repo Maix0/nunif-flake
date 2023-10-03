@@ -28,10 +28,6 @@
             ln -s '${pytorch-model}/pretrained_models' waifu2x/pretrained_models;
             ln -s '${onnx-model}/onnx-model' waifu2x/onnx_models;
           '';
-          installPhase = ''
-            mkdir "$out"
-            mv "$src" "$out"
-          '';
           nativeBuildInputs = [pkgs.unzip];
         };
       in {
