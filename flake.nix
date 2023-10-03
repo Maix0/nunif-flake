@@ -60,16 +60,13 @@
                 ps.wxPython_4_2
                 ps.av
               ];
+              postBuild = ''
+                export WAIFU_DIRECTORY='${waifu2x}';
+              '';
             })
             .env;
         in
-          pkgs.mkShell {
-            packages = [py-env];
-
-            shellHook = ''
-              export WAIFU_DIRECTORY='${waifu2x}';
-            '';
-          };
+          py-env;
       }
     );
 }
