@@ -30,6 +30,11 @@
             ${pkgs.tree}/bin/tree -ifFC .
           '';
           nativeBuildInputs = [pkgs.unzip];
+          installPhase = ''
+            mkdir "$out";
+            mv * "$out/"
+
+          '';
         };
       in {
         devShell = let
